@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-result-page',
@@ -15,7 +16,7 @@ export class ResultPageComponent implements OnInit {
   result6 = false
   result7 = false
 
-  constructor() { }
+  constructor(private router : Router) { }
 
   ngOnInit(): void {
   }
@@ -51,6 +52,9 @@ export class ResultPageComponent implements OnInit {
       this.result6 = false
       this.result7 = true
       return;
+    }
+    if(this.result7){
+      this.router.navigate(['/types-detail'])
     }
   }
   backTab() {

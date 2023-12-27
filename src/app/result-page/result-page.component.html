@@ -24,7 +24,7 @@
                         <span class="fw-bold"><div>34%</div> <span>EXTRAVERTED</span></span>
                         <span class="text-success fw-bold"><div class="text-end">66%</div> <span>INTROVERTED</span></span>
                       </div>
-                    <span style="text-align: center;">Introverted individuals tend to prefer fewer, yet deep and meaningful, social interactions and often feel drawn to calmer environments.</span>
+                    <span  style="text-align: center;">Introverted individuals tend to prefer fewer, yet deep and meaningful, social interactions and often feel drawn to calmer environments.</span>
                 </div>
             </div>
         </div>
@@ -108,15 +108,16 @@
                 </div>
             </div>
         </div>
-            <h3 *ngIf="result7" class="col-12 text-center py-2">One more thing...</h3>
-        <div *ngIf="result7" >
+            <h3 *ngIf="result7" class="col-12 text-center">One more thing...</h3>
+        <div *ngIf="result7" class="col-6" >
             <div class="row">
-                <div class="col-12 pe-5 ">
+                <div class="col-12">
                     <p>Before we move on to your profile, would you like an email copy of your results?</p>
-                    <p>We’ll save your results so you can easily access them again.</p>
-                    <input type="email" placeholder="Your@email.com" name="" id="">
+                    <p style="color: rgb(145, 145, 145);">We’ll save your results so you can easily access them again.</p>
+                    <input class="form-control" type="email" placeholder="Your@email.com" name="" id="">
                       
-                    <span style="text-align: center;">Turbulent individuals are self-conscious and sensitive to stress. They feel a sense of urgency in their emotions and tend to be success-driven, perfectionistic, and eager to improve.</span>
+                    <label  class="mt-3" style="text-align: start; cursor: pointer;">
+                      <input style="cursor: pointer;" type="checkbox" name="" id="">  Send me Virtuoso tips and research insights</label>
                 </div>
             </div>
         </div>
@@ -124,7 +125,7 @@
             <div>
                 <span (click)="backTab()" class="text-primary fw-bold " style="width: 150px; cursor: pointer;"><img height="20px" src="assets/images/back.png" alt=""> Back</span>
             </div>
-            <div class="d-flex justify-content-around" style="width: 100px;">
+            <div class="d-flex justify-content-around" style="width: 100px; margin-left:81px;">
                 <div class="dots" [ngClass]="{ 'active-dot': result1 }" (click)="onTabClick('result1')"></div>
                 <div class="dots" [ngClass]="{ 'active-dot': result2 }"(click)="onTabClick('result2')"></div>
                 <div class="dots" [ngClass]="{ 'active-dot': result3 }" (click)="onTabClick('result3')"></div>

@@ -8,7 +8,8 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HomePageComponent } from './home-page/home-page.component';
 import { RouterModule } from '@angular/router';
 import { ResultPageComponent } from './result-page/result-page.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';  // Import BrowserAnimationsModule
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TypesDetailComponent } from './types-detail/types-detail.component';  // Import BrowserAnimationsModule
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
     AppComponent,
     LoginRegisterComponent,
     HomePageComponent,
-    ResultPageComponent
+    ResultPageComponent,
+    TypesDetailComponent
   ],
   imports: [
     BrowserModule,
