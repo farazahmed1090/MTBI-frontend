@@ -12,9 +12,6 @@ const routes: Routes = [{
 }, {
   path: 'result-page', component: ResultPageComponent,
 },
- {
-  path: 'types-detail', component: TypesDetailComponent,
-}
 ];
 
 @NgModule({

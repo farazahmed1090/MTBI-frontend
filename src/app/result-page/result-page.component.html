@@ -10,11 +10,11 @@
             </div>
             <h3 *ngIf="result2" class="col-12 text-center py-2">Energy</h3>
         <div *ngIf="result2" class="col-12">
-            <div class="row">
-                <div class="col-6 d-flex justify-content-center align-items-center">
+            <div class="row m-0 p-0">
+                <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
                     <img src="../../assets/images/16personalities_trait_introverted.svg" alt="" height="200px">
                 </div>
-                <div class="col-6 pe-5 ">
+                <div class="col-12 col-md-6 px-5 ps-md-0 pt-3 pt-3 ">
                     <h1>66% Introverted</h1>
                     <div class="progress  "style="height:10px;">
                         <div class="progress-bar " role="progressbar" style="width: 34% ;background-color: rgb(207, 207, 207);" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
@@ -31,10 +31,10 @@
             <h3 *ngIf="result3" class="col-12 text-center py-2">Mind</h3>
         <div *ngIf="result3" class="col-12">
             <div class="row">
-                <div class="col-6 d-flex justify-content-center align-items-center">
+                <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
                     <img src="../../assets/images/16personalities_trait_assertive.svg" alt="" height="200px">
                 </div>
-                <div class="col-6 pe-5 ">
+                <div class="col-12 col-md-6 px-5 ps-md-0 pt-3">
                     <h1>80% Observant</h1>
                     <div class="progress  "style="height:10px;">
                         <div class="progress-bar bg-success" role="progressbar" style="width: 80%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
@@ -51,10 +51,10 @@
             <h3 *ngIf="result4" class="col-12 text-center py-2">Nature</h3>
         <div *ngIf="result4" class="col-12">
             <div class="row">
-                <div class="col-6 d-flex justify-content-center align-items-center">
+                <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
                     <img src="../../assets/images/16personalities_trait_observant.svg" alt="" height="200px">
                 </div>
-                <div class="col-6 pe-5 ">
+                <div class="col-12 col-md-6 px-5 ps-md-0 pt-3">
                     <h1>70% Thinking</h1>
                     <div class="progress  "style="height:10px;">
                         <div class="progress-bar " role="progressbar" style="width: 70% ;background-color: rgb(207, 207, 207);" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
@@ -71,10 +71,10 @@
             <h3 *ngIf="result5" class="col-12 text-center py-2">Tatics</h3>
         <div *ngIf="result5" class="col-12">
             <div class="row">
-                <div class="col-6 d-flex justify-content-center align-items-center">
+                <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
                     <img src="../../assets/images/16personalities_trait_prospecting.svg" alt="" height="200px">
                 </div>
-                <div class="col-6 pe-5 ">
+                <div class="col-12 col-md-6 px-5 ps-md-0 pt-3">
                     <h1>78% Prospecting</h1>
                     <div class="progress  "style="height:10px;">
                         <div class="progress-bar " role="progressbar" style="width: 22% ;background-color: rgb(207, 207, 207);" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
@@ -91,10 +91,10 @@
             <h3 *ngIf="result6" class="col-12 text-center py-2">Identity</h3>
         <div *ngIf="result6  " class="col-12">
             <div class="row">
-                <div class="col-6 d-flex justify-content-center align-items-center">
+                <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
                     <img src="../../assets/images/16personalities_trait_turbulent.svg" alt="" height="200px">
                 </div>
-                <div class="col-6 pe-5 ">
+                <div class="col-12 col-md-6 px-5 ps-md-0 pt-3">
                     <h1>60%  Turbulent</h1>
                     <div class="progress  "style="height:10px;">
                         <div class="progress-bar " role="progressbar" style="width: 40% ;background-color: rgb(207, 207, 207);" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
@@ -109,9 +109,9 @@
             </div>
         </div>
             <h3 *ngIf="result7" class="col-12 text-center">One more thing...</h3>
-        <div *ngIf="result7" class="col-6" >
+        <div *ngIf="result7" class="col-12 col-md-6" >
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 px-5 px-md-0">
                     <p>Before we move on to your profile, would you like an email copy of your results?</p>
                     <p style="color: rgb(145, 145, 145);">We’ll save your results so you can easily access them again.</p>
                     <input class="form-control" type="email" placeholder="Your@email.com" name="" id="">
@@ -125,7 +125,7 @@
             <div>
                 <span (click)="backTab()" class="text-primary fw-bold " style="width: 150px; cursor: pointer;"><img height="20px" src="assets/images/back.png" alt=""> Back</span>
             </div>
-            <div class="d-flex justify-content-around" style="width: 100px; margin-left:81px;">
+            <div class="dots-div" >
                 <div class="dots" [ngClass]="{ 'active-dot': result1 }" (click)="onTabClick('result1')"></div>
                 <div class="dots" [ngClass]="{ 'active-dot': result2 }"(click)="onTabClick('result2')"></div>
                 <div class="dots" [ngClass]="{ 'active-dot': result3 }" (click)="onTabClick('result3')"></div>
@@ -135,7 +135,7 @@
                 <div class="dots" [ngClass]="{ 'active-dot': result7 }" (click)="onTabClick('result7')"></div>
             </div>
             <div>
-                <button class="btn btn-primary " style="width: 150px;" (click)="nextTab()">Next</button>
+                <button class="btn btn-primary  button-next"  (click)="nextTab()">Next</button>
             </div>
         </div>
 

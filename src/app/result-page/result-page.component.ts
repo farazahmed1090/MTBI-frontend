@@ -22,7 +22,7 @@ export class ResultPageComponent implements OnInit {
   }
 
   nextTab() {
-    debugger
+    
     if (this.result1) {
       this.result1 = false
       this.result2 = true
@@ -53,9 +53,9 @@ export class ResultPageComponent implements OnInit {
       this.result7 = true
       return;
     }
-    if(this.result7){
-      this.router.navigate(['/types-detail'])
-    }
+    // if(this.result7){
+    //   this.router.navigate(['/types-detail'])
+    // }
   }
   backTab() {
     if (this.result7) {

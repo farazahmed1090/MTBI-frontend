@@ -4,9 +4,9 @@
             <img src="assets/images/web-logo.png" alt="">
             <img src="assets/images/second-logo.png" alt="">
         </div>
-        <div class="col-12 col-md-6 bg-warning login-div">
+        <div class="col-12 col-md-6  login-div">
             <button class="btn btn-danger">Unlock the Power of Personality Testing </button>
-            <button class="btn  btn-success" (click)="open(content)">Login/Register</button>
+            <button class="btn  btn-success" (click)="open(content)">Login / Register</button>
         </div>
     </div>
     <!-- login modal -->
@@ -19,45 +19,55 @@
             <form [formGroup]="loginForm">
             <div *ngIf="isLoginForm">
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1"
+                    <label  class="form-label">Email address</label>
+                    <input formControlName="email" type="email" class="form-control" 
                         aria-describedby="emailHelp">
                     <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input formControlName="password"  type="password" class="form-control" id="exampleInputPassword1">
+                    <label  class="form-label">Password</label>
+                    <input formControlName="password"  type="password" class="form-control" >
                 </div>
             </div>
             <div class="row" *ngIf="!isLoginForm">
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Student ID</label>
-                    <input formControlName="stdID" type="text" class="form-control" id="exampleInputEmail1"
+                    <label  class="form-label">Student ID</label>
+                    <input formControlName="stdID" type="text" class="form-control" 
                         aria-describedby="emailHelp">
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Student Name</label>
-                    <input formControlName="stdName" type="text" class="form-control" id="exampleInputEmail1"
+                    <label  class="form-label">Student Name</label>
+                    <input formControlName="stdName" type="text" class="form-control" 
                         aria-describedby="emailHelp">
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Father Name</label>
-                    <input formControlName="stdFatherName" type="text" class="form-control" id="exampleInputEmail1"
+                    <label  class="form-label">Father Name</label>
+                    <input formControlName="stdFatherName" type="text" class="form-control" 
+                        aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                    <label  class="form-label">Email address</label>
+                    <input formControlName="email" type="email" class="form-control" 
+                        aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                    <label  class="form-label">Password</label>
+                    <input formControlName="password"  type="password" class="form-control" >
+                </div>
+                <div class="mb-3" class="col-12 col-md-6">
+                    <label  class="form-label">Semester</label>
+                    <input formControlName="stdSemester" type="number" class="form-control" 
                         aria-describedby="emailHelp">
                 </div>
                 <div class="mb-3" class="col-12 col-md-6">
-                    <label for="exampleInputEmail1" class="form-label">Semester</label>
-                    <input formControlName="stdSemester" type="number" class="form-control" id="exampleInputEmail1"
-                        aria-describedby="emailHelp">
-                </div>
-                <div class="mb-3" class="col-12 col-md-6">
-                    <label for="exampleInputEmail1" class="form-label">Year</label>
-                    <input formControlName="stdYear" type="number" class="form-control" id="exampleInputEmail1"
+                    <label  class="form-label">Year</label>
+                    <input formControlName="stdYear" type="number" class="form-control" 
                         aria-describedby="emailHelp">
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Contact Number</label>
-                    <input formControlName="stdContactNumber" type="number" class="form-control" id="exampleInputPassword1">
+                    <label  class="form-label">Contact Number</label>
+                    <input formControlName="stdContactNumber" type="number" class="form-control" >
                 </div>
             </div>
             <button type="submit" class="btn btn-primary w-100" (click)="submit();d('Cross click')" >Submit</button>
@@ -71,3 +81,4 @@
         </div>
     </ng-template>
 </div>
+<app-loader *ngIf="loader"></app-loader>

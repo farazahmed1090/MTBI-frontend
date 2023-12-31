@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserServiceService } from '../user-service.service';
 
 
 
@@ -10,7 +11,15 @@ import { Router } from '@angular/router';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private router : Router) { }
+  constructor(private router : Router ,private userService : UserServiceService) {
+    let userID = localStorage.getItem('userID')
+    if(userID){
+      this.router.navigate(['/home'])
+    }else{
+      this.router.navigate([''])
+
+    }
+  }
   progressBar = "20%"; 
   arrLenght = 1
   allQuestionsArr = [
@@ -40,7 +49,9 @@ export class HomePageComponent implements OnInit {
     { QID: 34, Question: 'What is your favorite holiday destination?', Options: { optionA: 'Paris', optionB: 'Tokyo' } },
     { QID: 35, Question: 'Do you enjoy gardening?', Options: { optionA: 'Yes', optionB: 'No' } },
   ]
+  allQuestions: IQuestions[] = []
   questionsArr: any[] = []
+  showQuestions: IQuestions[] = []
 
   pushNextRecords(currentArray: any, recordsToPush: number) {
     let startIndex = currentArray.length;
@@ -48,8 +59,8 @@ export class HomePageComponent implements OnInit {
     
     
     let newArray = [];
-    for (let i = startIndex; i < endIndex && i < this.allQuestionsArr.length; i++) {
-      newArray.push(this.allQuestionsArr[i]);
+    for (let i = startIndex; i < endIndex && i < this.allQuestions.length; i++) {
+      newArray.push(this.allQuestions[i]);
      }
 
     // currentArray.push(...newArray);
@@ -62,16 +73,57 @@ export class HomePageComponent implements OnInit {
     if(arr.length > 0){
       this.arrLenght = this.arrLenght + 1
     }
-    this.pushNextRecords(this.questionsArr, 5)
-    console.log('new arr push  ', this.questionsArr)
+    this.pushNextRecords(this.showQuestions, 5)
+    console.log('new arr push  ', this.showQuestions)
     if(this.arrLenght == 2){
       this.router.navigate(['/result-page'])
     }
   }
   
+  getAllQuestions(){
+    this.userService.get_personality_questions().subscribe((res:any)=>{
+      // this.showQuestions = res
+      console.log('res',res)
+
+      for(let i = 0; i < res.length;i++){
+        this.allQuestions.push(res[i])
+        // console.log('answer ',this.showQuestions[i].choices[i].answer_id)
+      }
+      this.showQuestions = this.allQuestions
+      console.log('all questions',this.showQuestions)
+
+    })
+  }
   // Example usage: Push the first 10 records
   ngOnInit(): void {
-    console.log('previouse arr', this.allQuestionsArr)
-    console.log('next arr', this.pushNextRecords(this.questionsArr, 5))
+    this.getAllQuestions()
+    // console.log('previouse arr', this.allQuestionsArr)
+    // console.log('next arr', this.pushNextRecords(this.questionsArr, 5))
   }
+
+}
+// interface IQuestions {
+//   question_id: any;
+//   question_text: any;
+//   choices: Choice[];
+// }
+// interface Choice {
+//   answer_id: any;
+//   question_id: any;
+//   answer_text: any;
+// }
+
+interface IQuestions {
+  question_id: string;
+  question_text: string;
+  choices: Choices;
+}
+interface Choices {
+  '2': _2;
+  '3': _2;
+}
+interface _2 {
+  answer_id: string;
+  question_id: string;
+  answer_text: string;
 }

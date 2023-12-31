@@ -9,7 +9,9 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { RouterModule } from '@angular/router';
 import { ResultPageComponent } from './result-page/result-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TypesDetailComponent } from './types-detail/types-detail.component';  // Import BrowserAnimationsModule
+import { TypesDetailComponent } from './types-detail/types-detail.component'; 
+import { HttpClientModule } from '@angular/common/http';
+import { LoaderComponent } from './loader/loader.component'; 
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import { TypesDetailComponent } from './types-detail/types-detail.component';  /
     LoginRegisterComponent,
     HomePageComponent,
     ResultPageComponent,
-    TypesDetailComponent
+    TypesDetailComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,8 @@ import { TypesDetailComponent } from './types-detail/types-detail.component';  /
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
     
   ],
   providers: [],

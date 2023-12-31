@@ -7,11 +7,13 @@ $color2: #3197EE;
     .banner-home{
         background-color: green;
         min-height: 18rem;
-        
     }
     .card-row{
         position: absolute;
         top: 123px;
+        h3{
+          text-align: center ;
+        }
     }
     .home-page-card{
         display: flex;
@@ -90,5 +92,23 @@ $color2: #3197EE;
             transform: scale(1,1);
           }
         }
+      }
+      @media (max-width:767px) {
+        .card-row{
+          position:unset;
+          padding: 0px 2rem;
+          // top: 123px;
+      }
+      .banner-home{
+        padding-bottom: 2rem;
+    }
+   .question-section{
+    margin-top: 3rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    h3{
+      text-align: center;
+    }
+   }
       }
 }
