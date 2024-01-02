@@ -19,6 +19,9 @@ export class UserServiceService {
    signUp(_payload:any):Observable<any>{
     return this.http.post(`${this.apiURL}/signup`,_payload)
    }
+   save_user_responses(_payload:any):Observable<any>{
+    return this.http.post(`${this.apiURL}/save_user_responses`,_payload)
+   }
    get_personality_questions(){
     return this.http.get(`${this.apiURL}/get_personality_questions`)
    }

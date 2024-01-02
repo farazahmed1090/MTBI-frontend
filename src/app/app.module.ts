@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginRegisterComponent } from './login-register/login-register.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule ,ReactiveFormsModule } from '@angular/forms';
 import { HomePageComponent } from './home-page/home-page.component';
 import { RouterModule } from '@angular/router';
 import { ResultPageComponent } from './result-page/result-page.component';

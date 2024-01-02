@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserServiceService } from '../user-service.service';
+import { FormControl, FormGroup } from '@angular/forms';
+import { NgModel } from '@angular/forms';
 
 
 
@@ -11,7 +13,10 @@ import { UserServiceService } from '../user-service.service';
 })
 export class HomePageComponent implements OnInit {
 
+  
   constructor(private router : Router ,private userService : UserServiceService) {
+
+    
     let userID = localStorage.getItem('userID')
     if(userID){
       this.router.navigate(['/home'])
@@ -21,6 +26,8 @@ export class HomePageComponent implements OnInit {
     }
   }
   progressBar = "20%"; 
+  bgColor = "white";
+ 
   arrLenght = 1
   allQuestionsArr = [
     {
@@ -52,11 +59,15 @@ export class HomePageComponent implements OnInit {
   allQuestions: IQuestions[] = []
   questionsArr: any[] = []
   showQuestions: IQuestions[] = []
+  answersArr: answers[] = []
 
+  questionForm = new FormGroup({
+    answer: new FormControl(''),
+  })
+  
   pushNextRecords(currentArray: any, recordsToPush: number) {
     let startIndex = currentArray.length;
     let endIndex = startIndex + recordsToPush;
-    
     
     let newArray = [];
     for (let i = startIndex; i < endIndex && i < this.allQuestions.length; i++) {
@@ -80,11 +91,47 @@ export class HomePageComponent implements OnInit {
     }
   }
   
+  change(event:any,QID:any){
+    this.bgColor = "green"
+    debugger
+    console.log(this.questionForm.controls['answer'].value)
+    let alreadyExist =  this.answersArr.findIndex(obj => obj.question_id  == QID) 
+    if(alreadyExist != -1){
+      this.answersArr.splice(alreadyExist,1)
+    }
+   
+      let ansID = event.target.value
+     console.log('value of answer',QID)
+
+     const answerObj =  {
+      question_id: QID,
+      answer_id: this.questionForm.controls['answer'].value
+    }
+    this.answersArr.push(answerObj)
+    console.log('arr',this.answersArr)
+    
+  }
+  submit(){
+    const  _payload={
+      user_id: localStorage.getItem('userID'),
+       responses: this.answersArr
+    }
+    this.userService.save_user_responses(_payload).subscribe((res:any)=>{
+      console.log('save data ',res)
+    })
+
+  }
+  changeColor() {
+    const circle = document.querySelector('.circle') as HTMLElement;
+    const currentColor = circle.style.backgroundColor;
+
+    // Toggle between colors
+    circle.style.backgroundColor = currentColor === 'blue' ? 'red' : 'blue';
+  }
   getAllQuestions(){
     this.userService.get_personality_questions().subscribe((res:any)=>{
       // this.showQuestions = res
       console.log('res',res)
-
       for(let i = 0; i < res.length;i++){
         this.allQuestions.push(res[i])
         // console.log('answer ',this.showQuestions[i].choices[i].answer_id)
@@ -102,28 +149,22 @@ export class HomePageComponent implements OnInit {
   }
 
 }
-// interface IQuestions {
-//   question_id: any;
-//   question_text: any;
-//   choices: Choice[];
-// }
-// interface Choice {
-//   answer_id: any;
-//   question_id: any;
-//   answer_text: any;
-// }
-
 interface IQuestions {
-  question_id: string;
-  question_text: string;
-  choices: Choices;
+  question_id: any;
+  question_text: any;
+  choices: Choice[];
 }
-interface Choices {
-  '2': _2;
-  '3': _2;
+interface Choice {
+  answer_id: any;
+  question_id: any;
+  answer_text: any;
 }
-interface _2 {
-  answer_id: string;
-  question_id: string;
-  answer_text: string;
+interface IQuestinsPayload {
+  user_id: any;
+  responses: answers[];
 }
+interface answers {
+  question_id: any,
+  answer_id: any
+}
+
