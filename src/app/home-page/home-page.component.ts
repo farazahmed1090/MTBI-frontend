@@ -26,7 +26,6 @@ export class HomePageComponent implements OnInit {
     }
   }
   progressBar = "20%"; 
-  bgColor = "white";
  
   arrLenght = 1
   allQuestionsArr = [
@@ -73,7 +72,6 @@ export class HomePageComponent implements OnInit {
     for (let i = startIndex; i < endIndex && i < this.allQuestions.length; i++) {
       newArray.push(this.allQuestions[i]);
      }
-
     // currentArray.push(...newArray);
     currentArray.splice(0, startIndex, ...newArray);
     return currentArray;
@@ -92,8 +90,6 @@ export class HomePageComponent implements OnInit {
   }
   
   change(event:any,QID:any){
-    this.bgColor = "green"
-    debugger
     console.log(this.questionForm.controls['answer'].value)
     let alreadyExist =  this.answersArr.findIndex(obj => obj.question_id  == QID) 
     if(alreadyExist != -1){
