@@ -13,20 +13,22 @@ import { NgModel } from '@angular/forms';
 })
 export class HomePageComponent implements OnInit {
 
-  
-  constructor(private router : Router ,private userService : UserServiceService) {
 
-    
+  constructor(private router: Router, private userService: UserServiceService) {
+
+
     let userID = localStorage.getItem('userID')
-    if(userID){
+    if (userID) {
       this.router.navigate(['/home'])
-    }else{
+    } else {
       this.router.navigate([''])
 
     }
   }
-  progressBar = "20%"; 
- 
+  progressBar = "10%";
+  startind = 0;
+  disableDiv = true;
+
   arrLenght = 1
   allQuestionsArr = [
     {
@@ -63,85 +65,123 @@ export class HomePageComponent implements OnInit {
   questionForm = new FormGroup({
     answer: new FormControl(''),
   })
-  
+
   pushNextRecords(currentArray: any, recordsToPush: number) {
-    let startIndex = currentArray.length;
+    // if(this.allQuestions.length === this.startind){
+    //   return
+    // }
+    if (currentArray.length > 0) {
+      this.startind = this.startind + recordsToPush
+      if (this.startind === 7) {
+        this.progressBar = '20%'
+      }
+      if (this.startind === 14) {
+        this.progressBar = '30%'
+      }
+      if (this.startind === 21) {
+        this.progressBar = '40%'
+      }
+      if (this.startind === 28) {
+        this.progressBar = '50%'
+      }
+      if (this.startind === 35) {
+        this.progressBar = '60%'
+      }
+      if (this.startind === 42) {
+        this.progressBar = '70%'
+      }
+      if (this.startind === 49) {
+        this.progressBar = '80%'
+      }
+      if (this.startind === 56) {
+        this.progressBar = '90%'
+      }
+      if (this.startind === 63) {
+        this.progressBar = '100%'
+      }
+    }
+    let startIndex = this.startind;
     let endIndex = startIndex + recordsToPush;
-    
+
     let newArray = [];
     for (let i = startIndex; i < endIndex && i < this.allQuestions.length; i++) {
       newArray.push(this.allQuestions[i]);
-     }
+    }
     // currentArray.push(...newArray);
     currentArray.splice(0, startIndex, ...newArray);
     return currentArray;
   }
   pushNewRecord() {
-    this.progressBar = '50%'
-     let arr  = this.questionsArr.filter(ser => ser.QID === 24)
-    if(arr.length > 0){
-      this.arrLenght = this.arrLenght + 1
-    }
+    // this.progressBar = '50%'
+    //  let arr  = this.questionsArr.filter(ser => ser.QID === 24)
+    // if(arr.length > 0){
+    //   this.arrLenght = this.arrLenght + 1
+    // }
     this.pushNextRecords(this.showQuestions, 5)
     console.log('new arr push  ', this.showQuestions)
-    if(this.arrLenght == 2){
-      this.router.navigate(['/result-page'])
-    }
+    // if(this.arrLenght == 2){
+    //   this.router.navigate(['/result-page'])
+    // }
   }
-  
-  change(event:any,QID:any){
-    console.log(this.questionForm.controls['answer'].value)
-    let alreadyExist =  this.answersArr.findIndex(obj => obj.question_id  == QID) 
-    if(alreadyExist != -1){
-      this.answersArr.splice(alreadyExist,1)
+  // Example usage: Push the first 10 records
+  ngOnInit(): void {
+    this.getAllQuestions()
+  }
+  change(event: any, QID: any) {
+    this.disableDiv = false
+    // console.log(this.questionForm.controls['answer'].value)
+    let alreadyExist = this.answersArr.findIndex(obj => obj.question_id == QID)
+    if (alreadyExist != -1) {
+      this.answersArr.splice(alreadyExist, 1)
     }
-   
-      let ansID = event.target.value
-     console.log('value of answer',QID)
+    let ansID = event.target.value
 
-     const answerObj =  {
+    const answerObj = {
       question_id: QID,
-      answer_id: this.questionForm.controls['answer'].value
+      answer_id: ansID
     }
     this.answersArr.push(answerObj)
-    console.log('arr',this.answersArr)
-    
-  }
-  submit(){
-    const  _payload={
+
+    const _payload = {
       user_id: localStorage.getItem('userID'),
-       responses: this.answersArr
+      responses: this.answersArr
     }
-    this.userService.save_user_responses(_payload).subscribe((res:any)=>{
-      console.log('save data ',res)
+    this.userService.save_user_responses(_payload).subscribe((res: any) => {
+      console.log('save data ', res)
     })
+
+  }
+  getAllQuestions() {
+    this.userService.get_personality_questions().subscribe((res: any) => {
+      console.log('res', res)
+      for (let i = 0; i < res.length; i++) {
+        this.allQuestions.push(res[i])
+      }
+      // this.showQuestions = this.allQuestions
+      console.log('all questions', this.allQuestions)
+      this.pushNextRecords(this.showQuestions, 7)
+
+    })
+  }
+  submit() {
+    if (this.allQuestions.length === this.startind + 7) {
+
+      this.userService.calculate_scores(localStorage.getItem('userID')).subscribe(res=>{
+        console.log('result',res)
+      })
+
+    } else {
+      this.pushNextRecords(this.showQuestions, 7)
+
+      window.scrollTo(0, 0)
+    }
 
   }
   changeColor() {
     const circle = document.querySelector('.circle') as HTMLElement;
     const currentColor = circle.style.backgroundColor;
 
-    // Toggle between colors
     circle.style.backgroundColor = currentColor === 'blue' ? 'red' : 'blue';
-  }
-  getAllQuestions(){
-    this.userService.get_personality_questions().subscribe((res:any)=>{
-      // this.showQuestions = res
-      console.log('res',res)
-      for(let i = 0; i < res.length;i++){
-        this.allQuestions.push(res[i])
-        // console.log('answer ',this.showQuestions[i].choices[i].answer_id)
-      }
-      this.showQuestions = this.allQuestions
-      console.log('all questions',this.showQuestions)
-
-    })
-  }
-  // Example usage: Push the first 10 records
-  ngOnInit(): void {
-    this.getAllQuestions()
-    // console.log('previouse arr', this.allQuestionsArr)
-    // console.log('next arr', this.pushNextRecords(this.questionsArr, 5))
   }
 
 }

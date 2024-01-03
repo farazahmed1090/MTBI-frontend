@@ -1,122 +1,151 @@
 $color1: #f4f4f4;
 $color2: #3197EE;
 
-.main-home-page{
+.main-home-page {
 
-   
-    .banner-home{
-        background-color: green;
-        min-height: 18rem;
-    }
-    .card-row{
-        position: absolute;
-        top: 123px;
-        h3{
-          text-align: center ;
-        }
-    }
-    .home-page-card{
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        flex-direction: column;
-        min-height: 220px;
-        box-shadow: 0px 0px 10px grey;
-        background-color: white;
-        gap: 3%;
-        span{
-            text-align: center;
-        }
-    }
-    .question-section{
-        margin-top: 10rem;
-        padding-right:8%;
-        padding-left: 8%;
-    }
-    .question_div{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center; 
-        border-bottom: 1px solid rgb(185, 185, 185);
-        padding: 3% 0px 4% 0px;
-    }
-   
-    .radio-buttons{
-        cursor: pointer !important;
-    }
-    .selected{
-      height: 3px ;
-      width: 3px ;
-      border-radius: 15px;
-      background-color: #3197EE;
-    }
-  
-    
-    .radio{
-        cursor: pointer; 
-        user-select:none;
-        text-align: left;
-        &+.radio{
-          margin-top: 12px;
-        }
-        input{
-          display: none;
-          &+span{
-            display: inline-block; 
-            position: relative;
-            padding-left: 30px;
-            &:before{
-              content: '';
-              display: block; 
-              position: absolute;
-              top: 0px;
-              left: 0px;
-              border-radius: 50%;
-              margin-right: 5px;
-              width: 16px;
-              height: 16px;
-              border: 1px solid #ccc;
-              background: #fff;
-              margin-top: 4px;
-            }
-            &:after{
-              content: '';
-              display: block; 
-              width: 10px;
-              height: 10px;
-              background: #222;
-              position: absolute;
-              border-radius: 50%;
-              top: 7px;
-              left: 3px;
-              opacity: 0;
-              transform: scale(0,0); 
-              transition: all .2s cubic-bezier(0.64, 0.57, 0.67, 1.53);
-            }
-          }
-          &:checked+span:after{
-            opacity: 1;
-            transform: scale(1,1);
-          }
-        }
-      }
-      @media (max-width:767px) {
-        .card-row{
-          position:unset;
-          padding: 0px 2rem;
-          // top: 123px;
-      }
-      .banner-home{
-        padding-bottom: 2rem;
-    }
-   .question-section{
-    margin-top: 3rem;
-    padding-right: 1rem;
-    padding-left: 1rem;
-    h3{
+
+  .banner-home {
+    background-color: green;
+    min-height: 18rem;
+  }
+
+  .card-row {
+    position: absolute;
+    top: 123px;
+
+    h3 {
       text-align: center;
     }
-   }
+  }
+
+  .home-page-card {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    min-height: 220px;
+    box-shadow: 0px 0px 10px grey;
+    background-color: white;
+    gap: 3%;
+
+    span {
+      text-align: center;
+    }
+  }
+
+  .question-section {
+    margin-top: 10rem;
+    padding-right: 8%;
+    padding-left: 8%;
+  }
+
+  .question_div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgb(185, 185, 185);
+    padding: 3% 0px 4% 0px;
+    
+  }
+  .disabled_div{
+    pointer-events: none;
+    opacity: 0.4;
+  }
+  .radio{
+    &:focus{
+      .disabled_div{
+        pointer-events: none;
+        opacity: 0.4;
       }
+    }
+  }
+  .radio-buttons {
+    cursor: pointer !important;
+  }
+
+  .selected {
+    height: 3px;
+    width: 3px;
+    border-radius: 15px;
+    background-color: #3197EE;
+  }
+
+
+  .radio {
+    cursor: pointer;
+    user-select: none;
+    text-align: left;
+
+    &+.radio {
+      margin-top: 12px;
+    }
+
+    input {
+      display: none;
+
+      &+span {
+        display: inline-block;
+        position: relative;
+        padding-left: 30px;
+
+        &:before {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 0px;
+          left: 0px;
+          border-radius: 50%;
+          margin-right: 5px;
+          width: 16px;
+          height: 16px;
+          border: 1px solid #ccc;
+          background: #fff;
+          margin-top: 4px;
+        }
+
+        &:after {
+          content: '';
+          display: block;
+          width: 10px;
+          height: 10px;
+          background: #222;
+          position: absolute;
+          border-radius: 50%;
+          top: 7px;
+          left: 3px;
+          opacity: 0;
+          transform: scale(0, 0);
+          transition: all .2s cubic-bezier(0.64, 0.57, 0.67, 1.53);
+        }
+      }
+
+      &:checked+span:after {
+        opacity: 1;
+        transform: scale(1, 1);
+      }
+    }
+  }
+
+  @media (max-width:767px) {
+    .card-row {
+      position: unset;
+      padding: 0px 2rem;
+      // top: 123px;
+    }
+
+    .banner-home {
+      padding-bottom: 2rem;
+    }
+
+    .question-section {
+      margin-top: 3rem;
+      padding-right: 1rem;
+      padding-left: 1rem;
+
+      h3 {
+        text-align: center;
+      }
+    }
+  }
 }

@@ -25,5 +25,8 @@ export class UserServiceService {
    get_personality_questions(){
     return this.http.get(`${this.apiURL}/get_personality_questions`)
    }
+   calculate_scores(id:any){
+    return this.http.get(`${this.apiURL}/calculate_scores/${id}`)
+   }
 
 }
