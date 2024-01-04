@@ -1,8 +1,9 @@
-import { Component, ElementRef, Renderer2, OnInit, ViewChild, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, Renderer2, OnInit, ViewChild, ViewChildren, QueryList, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserServiceService } from '../user-service.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgModel } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 
 
@@ -14,7 +15,7 @@ import { NgModel } from '@angular/forms';
 export class HomePageComponent implements OnInit {
 
 
-  constructor(private router: Router, private userService: UserServiceService) {
+  constructor(private router: Router, private userService: UserServiceService, private cdr: ChangeDetectorRef) {
 
 
 
@@ -26,12 +27,19 @@ export class HomePageComponent implements OnInit {
 
     }
   }
+  ngAfterViewInit() {
+    this.cdr.detectChanges();
+    this.scrollToEnabledQuestion();
+  }
 
-  @ViewChild('questionDiv') elementRef!: ElementRef | undefined;
+  // @ViewChild('questionDiv') elementRef!: ElementRef | undefined;
+  @ViewChildren('questionDiv') questionDivs!: QueryList<ElementRef>;
   progressBar = "10%";
   startind = 0;
+  userID: any = null;
   currentQuestionIndex: number = 0;
-  // disableDiv = true;
+  black_icon: boolean = false;
+  white_icon: boolean = true;
 
   arrLenght = 1
   allQuestionsArr = [
@@ -66,6 +74,13 @@ export class HomePageComponent implements OnInit {
   showQuestions: IQuestions[] = []
   answersArr: answers[] = []
 
+  ngOnInit(): void {
+    this.userID = localStorage.getItem('userID')
+    this.getAllQuestions()
+    this.getQuestionsbyUserID()
+    window.scrollTo(0, 0)
+    // this.scrollToEnabledQuestion()
+  }
   questionForm = new FormGroup({
     answer: new FormControl(''),
   })
@@ -80,16 +95,18 @@ export class HomePageComponent implements OnInit {
   nextQuestion() {
     if (this.currentQuestionIndex < this.showQuestions.length - 1) {
       this.currentQuestionIndex++;
-      this.scrolldiv()
+      this.scrollToEnabledQuestion()
     }
   }
-  scrolldiv() {
-    if (this.elementRef) {
-      this.elementRef.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  scrollToEnabledQuestion() {
+    if (this.questionDivs && this.questionDivs.length > this.currentQuestionIndex) {
+      const enabledQuestionDiv = this.questionDivs.toArray()[this.currentQuestionIndex].nativeElement;
+      enabledQuestionDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
   pushNextRecords(currentArray: any, recordsToPush: number) {
     this.currentQuestionIndex = 0
+    this.scrollToEnabledQuestion()
     // if(this.allQuestions.length === this.startind){
     //   return
     // }
@@ -147,13 +164,9 @@ export class HomePageComponent implements OnInit {
     // }
   }
   // Example usage: Push the first 10 records
-  ngOnInit(): void {
-    this.getAllQuestions()
-  }
+
   change(event: any, QID: any) {
     this.nextQuestion()
-    // this.disableDiv = false
-    // console.log(this.questionForm.controls['answer'].value)
     let alreadyExist = this.answersArr.findIndex(obj => obj.question_id == QID)
     if (alreadyExist != -1) {
       this.answersArr.splice(alreadyExist, 1)
@@ -187,17 +200,30 @@ export class HomePageComponent implements OnInit {
 
     })
   }
+  getQuestionsbyUserID() {
+    this.userService.getQuestionsByUserID(this.userID).subscribe(res => {
+      console.log('result', res)
+      let response :any = res
+      if(response.success){
+        let que =  this.allQuestions.filter(ser=>ser.question_id  === response.user_responses.question_id)
+        console.log('filter record',que)
+        console.log( 'all record',this.allQuestions)
+      }
+      console.log(' ', res)
+      this.pushNextRecords(this.showQuestions, 7)
+
+    })
+  }
   submit() {
     if (this.allQuestions.length === this.startind + 7) {
-
-      this.userService.calculate_scores(localStorage.getItem('userID')).subscribe(res => {
+      this.router.navigate(['/result-page'])
+      this.userService.calculate_scores(this.userID).subscribe(res => {
         console.log('result', res)
       })
-
     } else {
       this.pushNextRecords(this.showQuestions, 7)
 
-      window.scrollTo(0, 0)
+      // window.scrollTo(0, 0)
     }
 
   }
@@ -206,6 +232,28 @@ export class HomePageComponent implements OnInit {
     const currentColor = circle.style.backgroundColor;
 
     circle.style.backgroundColor = currentColor === 'blue' ? 'red' : 'blue';
+  }
+  logout() {
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You Want to Logout",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Logout!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Swal.fire({
+        //   title: "Deleted!",
+        //   text: "Your file has been deleted.",
+        //   icon: "success"
+        // });
+        localStorage.removeItem('userID')
+        window.location.reload()
+      }
+    });
   }
 
 }

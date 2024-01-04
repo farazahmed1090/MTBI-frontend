@@ -5,7 +5,7 @@ $color2: #3197EE;
 
 
   .banner-home {
-    background-color: green;
+    // background-color: green;
     min-height: 18rem;
   }
 
@@ -59,6 +59,27 @@ $color2: #3197EE;
         opacity: 0.4;
       }
     }
+  }
+  .logout_div{
+    display: flex;
+    justify-content: end;
+    button{
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: transparent;
+      border: 1px solid white;
+      color: white;
+      font-weight: 400;
+      border-radius: 10px;
+      padding: 10px;
+      &:hover{
+        background-color: rgba(255, 255, 255, 0.164);
+        // color: green;
+      }
+
+    }
+    
   }
   .radio-buttons {
     cursor: pointer !important;

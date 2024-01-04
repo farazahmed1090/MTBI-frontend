@@ -28,5 +28,8 @@ export class UserServiceService {
    calculate_scores(id:any){
     return this.http.get(`${this.apiURL}/calculate_scores/${id}`)
    }
+   getQuestionsByUserID(id:any){
+    return this.http.get(`${this.apiURL}/get_user_responses/${id}`)
+   }
 
 }

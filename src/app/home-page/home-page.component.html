@@ -1,5 +1,11 @@
 <div class="main-home-page">
-    <div class="banner-home">
+    <div class="banner-home bg-success">
+        <div class="logout_div">
+            <button (click)="logout()" type="button">
+                <img *ngIf="black_icon" (mouseover)="!white_icon" class="pe-2" src="../../assets/images/exit-black.png" alt="">
+                <img *ngIf="white_icon" (mouseleave)="!black_icon" class="pe-2" src="../../assets/images/exit-white.png" alt="">
+                 Logout</button>
+        </div>
         <div class="d-flex flex-column align-items-center  justify-content-center pt-5">
             <h2 class="text-white">Free Personality Test</h2>
             <h5 class="text-white">MARS Type Explorer</h5>
@@ -56,7 +62,7 @@
                 <button (click)="nextQuestion()" [disabled]="currentQuestionIndex === showQuestions.length - 1">Next</button>
             </div> -->
             <div class="d-flex justify-content-center align-items-center mt-5">
-                <button class="btn btn-primary" style="width: 300px;cursor: pointer;" (click)="submit()">Next</button>
+                <button class="btn btn-success" style="width: 300px;cursor: pointer;" (click)="submit()">Next</button>
             </div>
 
     </section>
