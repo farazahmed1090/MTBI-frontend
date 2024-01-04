@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, Renderer2, OnInit, ViewChild, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserServiceService } from '../user-service.service';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -17,6 +17,7 @@ export class HomePageComponent implements OnInit {
   constructor(private router: Router, private userService: UserServiceService) {
 
 
+
     let userID = localStorage.getItem('userID')
     if (userID) {
       this.router.navigate(['/home'])
@@ -25,9 +26,12 @@ export class HomePageComponent implements OnInit {
 
     }
   }
+
+  @ViewChild('questionDiv') elementRef!: ElementRef | undefined;
   progressBar = "10%";
   startind = 0;
-  disableDiv = true;
+  currentQuestionIndex: number = 0;
+  // disableDiv = true;
 
   arrLenght = 1
   allQuestionsArr = [
@@ -66,7 +70,26 @@ export class HomePageComponent implements OnInit {
     answer: new FormControl(''),
   })
 
+
+  prevQuestion() {
+    if (this.currentQuestionIndex > 0) {
+      this.currentQuestionIndex--;
+    }
+  }
+
+  nextQuestion() {
+    if (this.currentQuestionIndex < this.showQuestions.length - 1) {
+      this.currentQuestionIndex++;
+      this.scrolldiv()
+    }
+  }
+  scrolldiv() {
+    if (this.elementRef) {
+      this.elementRef.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
   pushNextRecords(currentArray: any, recordsToPush: number) {
+    this.currentQuestionIndex = 0
     // if(this.allQuestions.length === this.startind){
     //   return
     // }
@@ -128,7 +151,8 @@ export class HomePageComponent implements OnInit {
     this.getAllQuestions()
   }
   change(event: any, QID: any) {
-    this.disableDiv = false
+    this.nextQuestion()
+    // this.disableDiv = false
     // console.log(this.questionForm.controls['answer'].value)
     let alreadyExist = this.answersArr.findIndex(obj => obj.question_id == QID)
     if (alreadyExist != -1) {
@@ -166,8 +190,8 @@ export class HomePageComponent implements OnInit {
   submit() {
     if (this.allQuestions.length === this.startind + 7) {
 
-      this.userService.calculate_scores(localStorage.getItem('userID')).subscribe(res=>{
-        console.log('result',res)
+      this.userService.calculate_scores(localStorage.getItem('userID')).subscribe(res => {
+        console.log('result', res)
       })
 
     } else {
