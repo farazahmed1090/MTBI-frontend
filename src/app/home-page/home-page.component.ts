@@ -76,7 +76,6 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.userID = localStorage.getItem('userID')
-    this.getAllQuestions()
     this.getQuestionsbyUserID()
     window.scrollTo(0, 0)
     // this.scrollToEnabledQuestion()
@@ -152,30 +151,26 @@ export class HomePageComponent implements OnInit {
     return currentArray;
   }
   pushNewRecord() {
-    // this.progressBar = '50%'
-    //  let arr  = this.questionsArr.filter(ser => ser.QID === 24)
-    // if(arr.length > 0){
-    //   this.arrLenght = this.arrLenght + 1
-    // }
+   
     this.pushNextRecords(this.showQuestions, 5)
     console.log('new arr push  ', this.showQuestions)
-    // if(this.arrLenght == 2){
-    //   this.router.navigate(['/result-page'])
-    // }
+    
   }
-  // Example usage: Push the first 10 records
+  
 
-  change(event: any, QID: any) {
+  change(ID: any, QID: any) {
+    this.answersArr = []
     this.nextQuestion()
     let alreadyExist = this.answersArr.findIndex(obj => obj.question_id == QID)
     if (alreadyExist != -1) {
       this.answersArr.splice(alreadyExist, 1)
     }
-    let ansID = event.target.value
+    // let ansID = event.target.value
+
 
     const answerObj = {
       question_id: QID,
-      answer_id: ansID
+      answer_id: ID
     }
     this.answersArr.push(answerObj)
 
@@ -185,6 +180,8 @@ export class HomePageComponent implements OnInit {
     }
     this.userService.save_user_responses(_payload).subscribe((res: any) => {
       console.log('save data ', res)
+      this.allQuestions.filter(ser=>ser.question_id === res)
+      
     })
 
   }
@@ -204,12 +201,57 @@ export class HomePageComponent implements OnInit {
     this.userService.getQuestionsByUserID(this.userID).subscribe(res => {
       console.log('result', res)
       let response :any = res
-      if(response.success){
-        let que =  this.allQuestions.filter(ser=>ser.question_id  === response.user_responses.question_id)
-        console.log('filter record',que)
-        console.log( 'all record',this.allQuestions)
+     
+      if (response.success) {
+        if(response.user_responses.length === 0){
+          this.getAllQuestions()
+        }else{
+          this.getAllQuestions()
+          let filteredQuestions = this.allQuestions.filter(question =>
+            !response.user_responses.some((userResponse: { question_id: string }) => userResponse.question_id === question.question_id)
+          );  
+          // Check if the filtered question exists
+          if (filteredQuestions.length > 0) {
+            // previouseQue.push(filteredQuestions[0])
+            this.allQuestions = filteredQuestions
+            console.log('Filtered record:', this.allQuestions); 
+              // this.allQuestions.splice(i,1) // Assuming you only expect one matching question
+          } else {
+            // console.log('Question not found for ID:', response.user_responses[i].question_id);
+          }
+          if (this.allQuestions.length > 7) {
+            this.progressBar = '20%'
+          }
+          if (this.allQuestions.length > 14) {
+            this.progressBar = '30%'
+          }
+          if (this.allQuestions.length > 21) {
+            this.progressBar = '40%'
+          }
+          if (this.allQuestions.length > 28) {
+            this.progressBar = '50%'
+          }
+          if (this.allQuestions.length > 35) {
+            this.progressBar = '60%'
+          }
+          if (this.allQuestions.length > 42) {
+            this.progressBar = '70%'
+          }
+          if (this.allQuestions.length > 49) {
+            this.progressBar = '80%'
+          }
+          if (this.allQuestions.length > 56) {
+            this.progressBar = '90%'
+          }
+          if (this.allQuestions.length > 63) {
+            this.progressBar = '100%'
+          }
+        }
+        console.log('All records:', this.allQuestions);
+        
+        
       }
-      console.log(' ', res)
+      // console.log(' ', res)
       this.pushNextRecords(this.showQuestions, 7)
 
     })

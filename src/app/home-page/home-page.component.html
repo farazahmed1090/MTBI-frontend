@@ -44,14 +44,14 @@
                 <h3>{{que.question_text}}</h3>
                 <span>
                     <label class="radio me-4" for="index{{i}}">
-                        <input [disabled]="i !== currentQuestionIndex"  name="flexRadioDefault" class="radio" ([ngModel])="que.choices[0].answer_id" [value]="que.choices[0].answer_id"
-                            (change)="change($event,que.choices[0].question_id)" type="radio" id="index{{i}}">
+                        <input [disabled]="i !== currentQuestionIndex"  name="flexRadioDefault" class="radio" [(ngModel)]="que.choices[0].answer_id" [value]="que.choices[0].answer_id"
+                            (change)="change(que.choices[0].answer_id,que.choices[0].question_id)" type="radio" id="index{{i}}">
                         <!-- <span [style.backgroundColor]="bgColor" class="selected"></span> -->
                         <span>{{que.choices[0].answer_text}}</span>
                     </label>
                     <label class="radio" for="index{{i}}{{i}}">
-                        <input [disabled]="i !== currentQuestionIndex" name="flexRadioDefault" class="radio" ([ngModel])="que.choices[1].answer_id" [value]="que.choices[1].answer_id"
-                            (change)="change($event,que.choices[1].question_id)" type="radio" id="index{{i}}{{i}}">
+                        <input [disabled]="i !== currentQuestionIndex" name="flexRadioDefault" class="radio" [(ngModel)]="que.choices[1].answer_id" [value]="que.choices[1].answer_id"
+                            (change)="change(que.choices[1].answer_id,que.choices[1].question_id)" type="radio" id="index{{i}}{{i}}">
                         <!-- <span [style.backgroundColor]="bgColor" class="selected"></span> -->
                         <span>{{que.choices[1].answer_text}}</span>
                     </label>
