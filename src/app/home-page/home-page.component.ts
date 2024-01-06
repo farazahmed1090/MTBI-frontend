@@ -31,7 +31,8 @@ export class HomePageComponent implements OnInit {
   }
 
   @ViewChildren('questionDiv') questionDivs!: QueryList<ElementRef>;
-  progressBar = "10%";
+  // progressBar = "10%";
+  progressBar: number = 10;
   startind = 0;
   userID: any = null;
   currentQuestionIndex: number = 0;
@@ -93,40 +94,16 @@ export class HomePageComponent implements OnInit {
       enabledQuestionDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
+
   pushNextRecords(currentArray: any, recordsToPush: number) {
-    
+    // this.addProgressBarNo()
     this.currentQuestionIndex = 0
     this.scrollToEnabledQuestion()
 
     if (currentArray.length > 0 && currentArray.length >= recordsToPush) {
       this.startind = this.startind + recordsToPush
-      if (this.startind === 7) {
-        this.progressBar = '20%'
-      }
-      if (this.startind === 14) {
-        this.progressBar = '30%'
-      }
-      if (this.startind === 21) {
-        this.progressBar = '40%'
-      }
-      if (this.startind === 28) {
-        this.progressBar = '50%'
-      }
-      if (this.startind === 35) {
-        this.progressBar = '60%'
-      }
-      if (this.startind === 42) {
-        this.progressBar = '70%'
-      }
-      if (this.startind === 49) {
-        this.progressBar = '80%'
-      }
-      if (this.startind === 56) {
-        this.progressBar = '90%'
-      }
-      if (this.startind === 63) {
-        this.progressBar = '100%'
-      }
+    this.progressBar = this.progressBar + 10
+  
     }
     let startIndex = this.startind;
     let endIndex = startIndex + recordsToPush;
@@ -162,13 +139,13 @@ export class HomePageComponent implements OnInit {
     }
     this.userService.save_user_responses(_payload).subscribe((res: any) => {
       console.log('save data ', res)
-      this.allQuestions.filter(ser=>ser.question_id === res)
-      
+      this.allQuestions.filter(ser => ser.question_id === res)
+
     })
   }
 
   getAllQuestions() {
-    try{
+    try {
       this.userService.get_personality_questions().subscribe((res: any) => {
         console.log('res', res)
         for (let i = 0; i < res.length; i++) {
@@ -178,7 +155,7 @@ export class HomePageComponent implements OnInit {
         this.pushNextRecords(this.showQuestions, 7)
       })
     }
-    catch(error){
+    catch (error) {
       console.error('Error fetching personality questions', error);
     }
   }
@@ -186,53 +163,51 @@ export class HomePageComponent implements OnInit {
     try {
       const res = await this.userService.getQuestionsByUserID(this.userID).toPromise();
       console.log('result', res);
-      
       let response: any = res;
-  
+
       if (response.success) {
         let filteredQuestions = this.allQuestions.filter(question =>
           !response.user_responses.some((userResponse: { question_id: string }) => userResponse.question_id === question.question_id)
         );
-  
         // Check if the filtered question exists
         if (filteredQuestions.length > 0) {
           this.allQuestions = filteredQuestions;
           this.showQuestions = [];
-  
+
           if (this.allQuestions.length >= 7) {
             this.pushNextRecords(this.showQuestions, 7);
           } else {
             this.pushNextRecords(this.showQuestions, this.allQuestions.length);
           }
-  
+
           if (filteredQuestions.length > 7) {
-            this.progressBar = '100%';
+            this.progressBar = 90;
           }
           if (filteredQuestions.length > 14) {
-            this.progressBar = '90%';
+            this.progressBar = 80;
           }
           if (filteredQuestions.length > 21) {
-            this.progressBar = '80%';
+            this.progressBar = 70;
           }
           if (filteredQuestions.length > 28) {
-            this.progressBar = '70%';
+            this.progressBar = 60;
           }
           if (filteredQuestions.length > 35) {
-            this.progressBar = '60%';
+            this.progressBar = 50;
           }
           if (filteredQuestions.length > 42) {
-            this.progressBar = '50%';
+            this.progressBar = 40;
           }
           if (filteredQuestions.length > 49) {
-            this.progressBar = '40%';
+            this.progressBar = 30;
           }
           if (filteredQuestions.length > 56) {
-            this.progressBar = '30%';
+            this.progressBar = 20;
           }
           if (filteredQuestions.length > 63) {
-            this.progressBar = '10%';
+            this.progressBar = 10;
           }
-        } else if (this.allQuestions.length === 0 && filteredQuestions.length === 0) {
+        } else {
           this.router.navigate(['/result-page']);
         }
       }
@@ -242,19 +217,24 @@ export class HomePageComponent implements OnInit {
     }
   }
   submit() {
-    this.getQuestionsbyUserID()
-    if (this.allQuestions.length === this.startind + 7) {
-      this.router.navigate(['/result-page'])
-      // this.getScore()
-    } else {
-      if(this.allQuestions.length >= 7){
-        this.pushNextRecords(this.showQuestions, 7)
-      }else{
-        this.pushNextRecords(this.showQuestions, this.allQuestions.length)
-      }
+    this.userService.getQuestionsByUserID(this.userID).subscribe(res=>{
+      let response :any = res
 
-      // window.scrollTo(0, 0)
-    }
+      if (response.success && response.user_responses.length == 70) {
+        this.router.navigate(['/result-page'])
+        // this.getScore()
+      } else {
+        if (this.allQuestions.length >= 7) {
+          this.pushNextRecords(this.showQuestions, 7)
+        } else {
+          this.pushNextRecords(this.showQuestions, this.allQuestions.length)
+        }
+  
+        // window.scrollTo(0, 0)
+      }
+  
+    })
+    // this.getQuestionsbyUserID()
 
   }
   changeColor() {

@@ -37,8 +37,12 @@
 
         <div class="progress">
 
-            <div class="progress-bar bg-success" role="progressbar" [style.width]="progressBar" aria-valuenow="50"
-                aria-valuemin="0" aria-valuemax="100">{{progressBar}}</div>
+            <!-- <div class="progress-bar bg-success" role="progressbar" [style.width]="progressBar" aria-valuenow="50"
+                aria-valuemin="0" aria-valuemax="100">{{progressBar}}</div> -->
+            <div class="progress-bar bg-success" role="progressbar" [style.width.%]="progressBar"
+                [attr.aria-valuenow]="progressBar" aria-valuemin="0" aria-valuemax="100">
+                {{ progressBar }}%
+            </div>
         </div>
         <div *ngFor="let que of showQuestions ;let i = index" class=" question_div  mt-4" #questionDiv
             [ngClass]="{'disabled_div': i !== currentQuestionIndex}">

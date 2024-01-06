@@ -20,14 +20,14 @@
             <div *ngIf="isLoginForm">
                 <div class="mb-3">
                     <label  class="form-label">Email address</label>
-                    <input formControlName="email" type="email" class="form-control" 
+                    <input (focus)="isEmailValid = false" formControlName="email" type="email" class="form-control" 
                         aria-describedby="emailHelp">
                         <div *ngIf="!isEmailValid" id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         <div *ngIf="isEmailValid" id="emailHelp" class="text-danger">Email required</div>
                 </div>
                 <div class="mb-3">
                     <label  class="form-label">Password</label>
-                    <input formControlName="password"  type="password" class="form-control" >
+                    <input  (focus)="isPassValid =false" formControlName="password"  type="password" class="form-control" >
                     <div *ngIf="isPassValid" id="emailHelp" class="text-danger">Password required</div>
                 </div>
             </div>
@@ -49,14 +49,14 @@
                 </div>
                 <div class="mb-3">
                     <label  class="form-label " >Email address</label>
-                    <input formControlName="email" type="email" class="form-control" 
+                    <input (focus)="isEmailValid = false" formControlName="email" type="email" class="form-control" 
                         aria-describedby="emailHelp">
                     <div *ngIf="!isEmailValid" id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                     <div *ngIf="isEmailValid" id="emailHelp" class="text-danger">Email required</div>
                 </div>
                 <div class="mb-3">
                     <label  class="form-label">Password</label>
-                    <input formControlName="password"  type="password" class="form-control" >
+                    <input (focus)="isPassValid = false" formControlName="password"  type="password" class="form-control" >
                     <div *ngIf="isPassValid" id="emailHelp" class="text-danger">Password required</div>
                 </div>
                 <div class="mb-3" class="col-12 col-md-6">
