@@ -2,11 +2,10 @@
     <div class="result-card">
         <div *ngIf="result1" class="d-flex flex-column align-items-center justify-content-around">
             <h5>Your Personality Type is:</h5>
-            <h1>Defender</h1>
-            <h4 style="color: rgb(0, 121, 177); font-weight: bold;">DFJI-T</h4>
-            <img src="../../assets/images/pngwing.com (1).png" alt="" height="200px">
-            <span style="text-align: center;">Defenders are very dedicated and warm protectors,always <br /> ready to
-                defend their loved ones</span>
+            <h1>{{perTitle !== '' ? perTitle : "Defender"}}</h1>
+            <h4 style="color: rgb(0, 121, 177); font-weight: bold;text-transform: uppercase;">{{perType}}</h4>
+            <img src="../../assets/images/pngwing.com (1).png" alt="" class="mt-4" height="200px">
+            <span style="text-align: center;width: 70%; ">{{ perDes !== '' ? perDes : "Defenders are very dedicated and warm protectors, always ready to defend their loved ones" }}</span>
             </div>
             <h3 *ngIf="result2" class="col-12 text-center py-2">Energy</h3>
         <div *ngIf="result2" class="col-12">
@@ -122,8 +121,8 @@
             </div>
         </div>
         <div class="card-footer">
-            <div>
-                <span (click)="backTab()" class="text-primary fw-bold " style="width: 150px; cursor: pointer;"><img height="20px" src="assets/images/back.png" alt=""> Back</span>
+            <div >
+                <span  (click)="backTab()" class="text-primary fw-bold " style="width: 150px; cursor: pointer;"><img height="20px" src="assets/images/back.png" alt=""> Back</span>
             </div>
             <div class="dots-div" >
                 <div class="dots" [ngClass]="{ 'active-dot': result1 }" (click)="onTabClick('result1')"></div>

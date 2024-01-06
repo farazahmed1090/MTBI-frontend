@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
@@ -15,19 +15,24 @@ export class LoginRegisterComponent implements OnInit {
 
   formTitle = 'Login'
   isLoginForm = true
-  loader= false
+  loader = false
   defaultEmail = 'faraz@gmail.com'
   defaultPass = '12345'
+  modalRef :any;
+  isEmailValid = false
+  isPassValid = false
+
   loginForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('',Validators.required),
     stdID: new FormControl(''),
     stdName: new FormControl(''),
     stdFatherName: new FormControl(''),
     stdSemester: new FormControl(''),
     stdYear: new FormControl(''),
     stdContactNumber: new FormControl(''),
-  })
+    // stdContactNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
+  });
 
 
   constructor(private modalService: NgbModal, private router: Router, private userService: UserServiceService) {
@@ -40,16 +45,16 @@ export class LoginRegisterComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-
   }
    login() {
+    this.loader = true
     const _payload = {
       username: this.loginForm.controls['email'].value,
       password: this.loginForm.controls['password'].value,
     }
     this.userService.login(_payload).subscribe((res: any) => {
       console.log(res)
-      this.loader = true
+      
       if(res.success){
         this.loader = false
         Swal.fire({
@@ -76,7 +81,11 @@ export class LoginRegisterComponent implements OnInit {
     })
   }
 
+  validateSignupForm(){
+    let isSignupFormValid = true
+  }
   signUp() {
+    this.loader = true
     const _payload = {
       username: this.loginForm.controls['email'].value,
       password: this.loginForm.controls['password'].value,
@@ -91,6 +100,7 @@ export class LoginRegisterComponent implements OnInit {
     this.userService.signUp(_payload).subscribe((res: any) => {
       console.log(res)
       if(res.success){
+        this.loader = false
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -98,9 +108,8 @@ export class LoginRegisterComponent implements OnInit {
           showConfirmButton: false,
           timer: 1000
         });
-          // this.router.navigate(['/home'])
-          // localStorage.setItem('userID',res.user_id)
       }else{
+        this.loader = false
         Swal.fire({
               position: "top-end",
               icon: "error",
@@ -112,7 +121,6 @@ export class LoginRegisterComponent implements OnInit {
       }
     })
   }
-
   clearForm() {
     this.loginForm.patchValue({
       email: null,
@@ -128,40 +136,28 @@ export class LoginRegisterComponent implements OnInit {
   }
 
   open(content: any) {
-    this.modalService.open(content, { centered: true });
+    this.modalRef =  this.modalService.open(content, { centered: true });
   }
   submit() {
-    if(this.isLoginForm){
-      this.login()
+    if(this.loginForm.valid){
+      if(this.isLoginForm){
+        this.login()
+        this.modalRef?.close();
+      }else{
+        this.signUp()
+        this.modalRef?.close();
+      }
+      this.clearForm()
     }else{
-      this.signUp()
+      if(!this.loginForm.controls.email.valid){
+        this.isEmailValid = true
+      }
+       if(!this.loginForm.controls.password.valid){
+        this.isPassValid = true
+      }
     }
-    this.clearForm()
     
-    
-    // console.log(this.loginForm.value.email)
-    // if (this.loginForm.value.email === this.defaultEmail && this.loginForm.value.password === this.defaultPass) {
-    //   this.router.navigate(['/home'])
 
-    //   Swal.fire({
-    //     position: "top-end",
-    //     icon: "success",
-    //     title: "Login successfully",
-    //     showConfirmButton: false,
-    //     timer: 1000
-    //   });
-    //   //  alert('login Success')
-    //   this.clearForm()
-    // } else {
-    //   Swal.fire({
-    //     position: "top-end",
-    //     icon: "error",
-    //     title: "Invalid Credientials",
-    //     showConfirmButton: false,
-    //     timer: 1000
-    //   });
-    //   this.clearForm()
-    // }
   }
 
   navigateToForm(form: any) {

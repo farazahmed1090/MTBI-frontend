@@ -17,8 +17,6 @@ export class HomePageComponent implements OnInit {
 
   constructor(private router: Router, private userService: UserServiceService, private cdr: ChangeDetectorRef) {
 
-
-
     let userID = localStorage.getItem('userID')
     if (userID) {
       this.router.navigate(['/home'])
@@ -32,7 +30,6 @@ export class HomePageComponent implements OnInit {
     this.scrollToEnabledQuestion();
   }
 
-  // @ViewChild('questionDiv') elementRef!: ElementRef | undefined;
   @ViewChildren('questionDiv') questionDivs!: QueryList<ElementRef>;
   progressBar = "10%";
   startind = 0;
@@ -76,20 +73,13 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.userID = localStorage.getItem('userID')
+    this.getAllQuestions()
     this.getQuestionsbyUserID()
     window.scrollTo(0, 0)
-    // this.scrollToEnabledQuestion()
   }
   questionForm = new FormGroup({
     answer: new FormControl(''),
   })
-
-
-  prevQuestion() {
-    if (this.currentQuestionIndex > 0) {
-      this.currentQuestionIndex--;
-    }
-  }
 
   nextQuestion() {
     if (this.currentQuestionIndex < this.showQuestions.length - 1) {
@@ -104,12 +94,11 @@ export class HomePageComponent implements OnInit {
     }
   }
   pushNextRecords(currentArray: any, recordsToPush: number) {
+    
     this.currentQuestionIndex = 0
     this.scrollToEnabledQuestion()
-    // if(this.allQuestions.length === this.startind){
-    //   return
-    // }
-    if (currentArray.length > 0) {
+
+    if (currentArray.length > 0 && currentArray.length >= recordsToPush) {
       this.startind = this.startind + recordsToPush
       if (this.startind === 7) {
         this.progressBar = '20%'
@@ -150,13 +139,6 @@ export class HomePageComponent implements OnInit {
     currentArray.splice(0, startIndex, ...newArray);
     return currentArray;
   }
-  pushNewRecord() {
-   
-    this.pushNextRecords(this.showQuestions, 5)
-    console.log('new arr push  ', this.showQuestions)
-    
-  }
-  
 
   change(ID: any, QID: any) {
     this.answersArr = []
@@ -183,87 +165,93 @@ export class HomePageComponent implements OnInit {
       this.allQuestions.filter(ser=>ser.question_id === res)
       
     })
-
   }
+
   getAllQuestions() {
-    this.userService.get_personality_questions().subscribe((res: any) => {
-      console.log('res', res)
-      for (let i = 0; i < res.length; i++) {
-        this.allQuestions.push(res[i])
-      }
-      // this.showQuestions = this.allQuestions
-      console.log('all questions', this.allQuestions)
-      this.pushNextRecords(this.showQuestions, 7)
-
-    })
-  }
-  getQuestionsbyUserID() {
-    this.userService.getQuestionsByUserID(this.userID).subscribe(res => {
-      console.log('result', res)
-      let response :any = res
-     
-      if (response.success) {
-        if(response.user_responses.length === 0){
-          this.getAllQuestions()
-        }else{
-          this.getAllQuestions()
-          let filteredQuestions = this.allQuestions.filter(question =>
-            !response.user_responses.some((userResponse: { question_id: string }) => userResponse.question_id === question.question_id)
-          );  
-          // Check if the filtered question exists
-          if (filteredQuestions.length > 0) {
-            // previouseQue.push(filteredQuestions[0])
-            this.allQuestions = filteredQuestions
-            console.log('Filtered record:', this.allQuestions); 
-              // this.allQuestions.splice(i,1) // Assuming you only expect one matching question
-          } else {
-            // console.log('Question not found for ID:', response.user_responses[i].question_id);
-          }
-          if (this.allQuestions.length > 7) {
-            this.progressBar = '20%'
-          }
-          if (this.allQuestions.length > 14) {
-            this.progressBar = '30%'
-          }
-          if (this.allQuestions.length > 21) {
-            this.progressBar = '40%'
-          }
-          if (this.allQuestions.length > 28) {
-            this.progressBar = '50%'
-          }
-          if (this.allQuestions.length > 35) {
-            this.progressBar = '60%'
-          }
-          if (this.allQuestions.length > 42) {
-            this.progressBar = '70%'
-          }
-          if (this.allQuestions.length > 49) {
-            this.progressBar = '80%'
-          }
-          if (this.allQuestions.length > 56) {
-            this.progressBar = '90%'
-          }
-          if (this.allQuestions.length > 63) {
-            this.progressBar = '100%'
-          }
+    try{
+      this.userService.get_personality_questions().subscribe((res: any) => {
+        console.log('res', res)
+        for (let i = 0; i < res.length; i++) {
+          this.allQuestions.push(res[i])
         }
-        console.log('All records:', this.allQuestions);
-        
-        
+        console.log('all questions', this.allQuestions)
+        this.pushNextRecords(this.showQuestions, 7)
+      })
+    }
+    catch(error){
+      console.error('Error fetching personality questions', error);
+    }
+  }
+  async getQuestionsbyUserID() {
+    try {
+      const res = await this.userService.getQuestionsByUserID(this.userID).toPromise();
+      console.log('result', res);
+      
+      let response: any = res;
+  
+      if (response.success) {
+        let filteredQuestions = this.allQuestions.filter(question =>
+          !response.user_responses.some((userResponse: { question_id: string }) => userResponse.question_id === question.question_id)
+        );
+  
+        // Check if the filtered question exists
+        if (filteredQuestions.length > 0) {
+          this.allQuestions = filteredQuestions;
+          this.showQuestions = [];
+  
+          if (this.allQuestions.length >= 7) {
+            this.pushNextRecords(this.showQuestions, 7);
+          } else {
+            this.pushNextRecords(this.showQuestions, this.allQuestions.length);
+          }
+  
+          if (filteredQuestions.length > 7) {
+            this.progressBar = '100%';
+          }
+          if (filteredQuestions.length > 14) {
+            this.progressBar = '90%';
+          }
+          if (filteredQuestions.length > 21) {
+            this.progressBar = '80%';
+          }
+          if (filteredQuestions.length > 28) {
+            this.progressBar = '70%';
+          }
+          if (filteredQuestions.length > 35) {
+            this.progressBar = '60%';
+          }
+          if (filteredQuestions.length > 42) {
+            this.progressBar = '50%';
+          }
+          if (filteredQuestions.length > 49) {
+            this.progressBar = '40%';
+          }
+          if (filteredQuestions.length > 56) {
+            this.progressBar = '30%';
+          }
+          if (filteredQuestions.length > 63) {
+            this.progressBar = '10%';
+          }
+        } else if (this.allQuestions.length === 0 && filteredQuestions.length === 0) {
+          this.router.navigate(['/result-page']);
+        }
       }
-      // console.log(' ', res)
-      this.pushNextRecords(this.showQuestions, 7)
-
-    })
+    } catch (error) {
+      console.error('Error fetching questions:', error);
+      // Handle the error as needed
+    }
   }
   submit() {
+    this.getQuestionsbyUserID()
     if (this.allQuestions.length === this.startind + 7) {
       this.router.navigate(['/result-page'])
-      this.userService.calculate_scores(this.userID).subscribe(res => {
-        console.log('result', res)
-      })
+      // this.getScore()
     } else {
-      this.pushNextRecords(this.showQuestions, 7)
+      if(this.allQuestions.length >= 7){
+        this.pushNextRecords(this.showQuestions, 7)
+      }else{
+        this.pushNextRecords(this.showQuestions, this.allQuestions.length)
+      }
 
       // window.scrollTo(0, 0)
     }
@@ -287,11 +275,6 @@ export class HomePageComponent implements OnInit {
       confirmButtonText: "Yes, Logout!"
     }).then((result) => {
       if (result.isConfirmed) {
-        // Swal.fire({
-        //   title: "Deleted!",
-        //   text: "Your file has been deleted.",
-        //   icon: "success"
-        // });
         localStorage.removeItem('userID')
         window.location.reload()
       }

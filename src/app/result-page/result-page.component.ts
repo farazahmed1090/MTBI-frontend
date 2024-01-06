@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserServiceService } from '../user-service.service';
 
 @Component({
   selector: 'app-result-page',
@@ -15,10 +16,37 @@ export class ResultPageComponent implements OnInit {
   result5 = false
   result6 = false
   result7 = false
+  userID: any = null
+  perType: any = null
+  perTitle: any = null
+  perDes: any = null
+  constructor(private router : Router,private userService :UserServiceService) {
+    let userID = localStorage.getItem('userID')
+    if (userID) {
+      this.router.navigate(['/result-page'])
+    } else {
+      this.router.navigate([''])
 
-  constructor(private router : Router) { }
+    }
+   }
 
   ngOnInit(): void {
+    this.userID = localStorage.getItem('userID')
+    this.getScore()
+  }
+  getScore(){
+    this.userService.calculate_scores(this.userID).subscribe(res => {
+      console.log('result', res)
+      let response :any = res
+      if(response.status === "successful" ){
+
+         this.perType = response.personality_type
+         this.perTitle = response.personality_title
+        //  this.perTitle = 'nesty'
+         this.perDes = response.personality_description
+
+      }
+    })
   }
 
   nextTab() {
