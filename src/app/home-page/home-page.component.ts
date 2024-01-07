@@ -100,6 +100,10 @@ export class HomePageComponent implements OnInit {
     this.currentQuestionIndex = 0
     this.scrollToEnabledQuestion()
 
+    if(this.progressBar >= 100){
+      this.router.navigate(['/result-page']);
+    }
+
     if (currentArray.length > 0 && currentArray.length >= recordsToPush) {
       this.startind = this.startind + recordsToPush
     this.progressBar = this.progressBar + 10
@@ -115,6 +119,7 @@ export class HomePageComponent implements OnInit {
     // currentArray.push(...newArray);
     currentArray.splice(0, startIndex, ...newArray);
     return currentArray;
+    
   }
 
   change(ID: any, QID: any) {
@@ -217,6 +222,8 @@ export class HomePageComponent implements OnInit {
     }
   }
   submit() {
+    window
+    location.reload()
     this.userService.getQuestionsByUserID(this.userID).subscribe(res=>{
       let response :any = res
 
