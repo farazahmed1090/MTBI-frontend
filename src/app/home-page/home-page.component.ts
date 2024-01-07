@@ -222,8 +222,6 @@ export class HomePageComponent implements OnInit {
     }
   }
   submit() {
-    window
-    location.reload()
     this.userService.getQuestionsByUserID(this.userID).subscribe(res=>{
       let response :any = res
 
