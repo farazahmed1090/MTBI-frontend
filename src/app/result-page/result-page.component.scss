@@ -31,6 +31,8 @@
     }
 
     .dots-div {
+        position: absolute;
+        bottom: 11%;
         width: 100px;
         // margin-left: 81px;
         display: flex;
@@ -57,6 +59,11 @@
         width: 150px;
 
     }
+    // .btn-logout{
+    //     position: absolute;
+    //     top: 10%;
+    //     right: 10%;
+    // }
 
     @media (max-width:767px) {
         .result-card {

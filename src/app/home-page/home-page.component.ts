@@ -38,6 +38,7 @@ export class HomePageComponent implements OnInit {
   currentQuestionIndex: number = 0;
   black_icon: boolean = false;
   white_icon: boolean = true;
+  
 
   arrLenght = 1
   allQuestionsArr = [

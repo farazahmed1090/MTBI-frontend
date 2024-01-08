@@ -91,7 +91,7 @@
         <div *ngIf="result6  " class="col-12">
             <div class="row">
                 <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
-                    <img src="../../assets/images/16personalities_trait_turbulent.svg" alt="" height="200px">
+                    <img src="assets/images/16personalities_trait_turbulent.svg" alt="" height="200px">
                 </div>
                 <div class="col-12 col-md-6 px-5 ps-md-0 pt-3">
                     <h1>60%  Turbulent</h1>
@@ -107,36 +107,45 @@
                 </div>
             </div>
         </div>
+        
             <h3 *ngIf="result7" class="col-12 text-center">One more thing...</h3>
-        <div *ngIf="result7" class="col-12 col-md-6" >
+        <div *ngIf="result7" class="col-12 col-md-6">
             <div class="row">
                 <div class="col-12 px-5 px-md-0">
                     <p>Before we move on to your profile, would you like an email copy of your results?</p>
                     <p style="color: rgb(145, 145, 145);">We’ll save your results so you can easily access them again.</p>
-                    <input class="form-control" type="email" placeholder="Your@email.com" name="" id="">
-                      
-                    <label  class="mt-3" style="text-align: start; cursor: pointer;">
-                      <input style="cursor: pointer;" type="checkbox" name="" id="">  Send me Virtuoso tips and research insights</label>
+                    <form [formGroup]="form">
+                        <input formControlName="email" class="form-control" type="email" placeholder="Your@email.com">
+                      </form>
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="button" class="btn btn-success" (click)="sendPersonalityEmail()" [disabled]="form.invalid">Send Email</button>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="card-footer">
-            <div >
-                <span  (click)="backTab()" class="text-primary fw-bold " style="width: 150px; cursor: pointer;"><img height="20px" src="assets/images/back.png" alt=""> Back</span>
-            </div>
-            <div class="dots-div" >
-                <div class="dots" [ngClass]="{ 'active-dot': result1 }" (click)="onTabClick('result1')"></div>
-                <div class="dots" [ngClass]="{ 'active-dot': result2 }"(click)="onTabClick('result2')"></div>
-                <div class="dots" [ngClass]="{ 'active-dot': result3 }" (click)="onTabClick('result3')"></div>
-                <div class="dots" [ngClass]="{ 'active-dot': result4 }" (click)="onTabClick('result4')"></div>
-                <div class="dots" [ngClass]="{ 'active-dot': result5 }" (click)="onTabClick('result5')"></div>
-                <div class="dots" [ngClass]="{ 'active-dot': result6 }" (click)="onTabClick('result6')"></div>
-                <div class="dots" [ngClass]="{ 'active-dot': result7 }" (click)="onTabClick('result7')"></div>
+            <div class="d-flex justify-content-center align-items-center" style="height: 40px;width: 66px;" >
+                <span *ngIf="!result1"  (click)="backTab()" class="text-primary fw-bold " style="width: 150px; cursor: pointer"><img height="20px" src="assets/images/back.png" alt=""> Back</span>
             </div>
             <div>
-                <button class="btn btn-primary  button-next"  (click)="nextTab()">Next</button>
+                <button *ngIf="result7" (click)="logout()" type="button" class="btn btn-primary ">
+                    <img class="pe-2" src="../../assets/images/exit-white.png"
+                        alt="">
+                    Logout</button>
+                <button *ngIf="!result7" class="btn btn-primary  button-next"  (click)="nextTab()">Next</button>
+                <button *ngIf="result7" class="btn btn-primary ms-2 button-next"  (click)="reTest()">Re Take</button>
             </div>
+        </div>
+        <div class="dots-div">
+            <div class="dots" [ngClass]="{ 'active-dot': result1 }" (click)="onTabClick('result1')"></div>
+            <div class="dots" [ngClass]="{ 'active-dot': result2 }"(click)="onTabClick('result2')"></div>
+            <div class="dots" [ngClass]="{ 'active-dot': result3 }" (click)="onTabClick('result3')"></div>
+            <div class="dots" [ngClass]="{ 'active-dot': result4 }" (click)="onTabClick('result4')"></div>
+            <div class="dots" [ngClass]="{ 'active-dot': result5 }" (click)="onTabClick('result5')"></div>
+            <div class="dots" [ngClass]="{ 'active-dot': result6 }" (click)="onTabClick('result6')"></div>
+            <div class="dots" [ngClass]="{ 'active-dot': result7 }" (click)="onTabClick('result7')"></div>
         </div>
 
     </div>
 </div>
+<app-loader *ngIf="loader"></app-loader>
