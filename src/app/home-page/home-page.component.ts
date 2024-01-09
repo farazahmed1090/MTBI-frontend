@@ -173,6 +173,10 @@ export class HomePageComponent implements OnInit {
       const res = await this.userService.getQuestionsByUserID(_payload).toPromise();
       console.log('result', res);
       let response: any = res;
+      if (response.success && response.user_responses.length == 70) {
+        this.router.navigate(['/result-page'])
+        // this.getScore()
+      }
 
       if (response.success) {
         let filteredQuestions = this.allQuestions.filter(question =>
@@ -216,9 +220,7 @@ export class HomePageComponent implements OnInit {
           if (filteredQuestions.length > 63) {
             this.progressBar = 10;
           }
-        } else {
-          this.router.navigate(['/result-page']);
-        }
+        } 
       }
     } catch (error) {
       console.error('Error fetching questions:', error);
