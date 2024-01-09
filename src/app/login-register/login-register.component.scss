@@ -1,8 +1,9 @@
 .main-home-page {
     overflow-x: hidden;
     height: 100vh;
-    .row{
-     height: 100%;
+
+    .row {
+        height: 100%;
     }
 
     .login-div {
@@ -17,24 +18,31 @@
         background-color: white;
         gap: 10px;
     }
-   
+
 
     .logo-div {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
+
         // height: 40rem;
-        img {
-            height: 15rem;
+        .pharma-logo1 {
+            height: 14rem;
+        }
+
+        .pharma-logo2 {
+            height: 7rem;
         }
     }
-.modal-footer{
-    .link-span {
-        color: blue !important;
-        cursor: pointer !important;
+
+    .modal-footer {
+        .link-span {
+            color: blue !important;
+            cursor: pointer !important;
+        }
     }
-}
+
     .modal {
         .modal-content.form-wrapper {
             width: 100%;
@@ -57,8 +65,9 @@
                 justify-content: center;
                 align-items: center;
             }
-            .form-control{
-                .invalid-field{
+
+            .form-control {
+                .invalid-field {
                     border-color: rgb(226, 32, 32) !important;
                     box-shadow: 0px 0px 5px rgb(206, 53, 53) !important;
                 }
@@ -153,9 +162,9 @@
 
 
     @media (max-width: 767px) {
-        .logo-div{
+        .logo-div {
             display: none;
         }
-        
+
     }
 }
