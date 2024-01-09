@@ -28,14 +28,17 @@ export class UserServiceService {
    calculate_scores(id:any){
     return this.http.get(`${this.apiURL}/calculate_scores/${id}`)
    }
-   getQuestionsByUserID(id:any){
-    return this.http.get(`${this.apiURL}/get_user_responses/${id}`)
-   }
+  //  getQuestionsByUserID(id:any){
+  //   return this.http.get(`${this.apiURL}/get_user_responses/${id}`)
+  //  }
    delete_user_responses(id:any){
     return this.http.get(`${this.apiURL}/delete_user_responses/${id}`)
    }
    send_personality_email(_payload:any):Observable<any>{
     return this.http.post(`${this.apiURL}/send_personality_email`,_payload)
+   }
+   getQuestionsByUserID(_payload:any):Observable<any>{
+    return this.http.post(`${this.apiURL}/get_user_responses`,_payload)
    }
 
 }

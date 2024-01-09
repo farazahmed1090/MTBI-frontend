@@ -38,7 +38,7 @@ export class HomePageComponent implements OnInit {
   currentQuestionIndex: number = 0;
   black_icon: boolean = false;
   white_icon: boolean = true;
-  
+
 
   arrLenght = 1
   allQuestionsArr = [
@@ -101,14 +101,14 @@ export class HomePageComponent implements OnInit {
     this.currentQuestionIndex = 0
     this.scrollToEnabledQuestion()
 
-    if(this.progressBar >= 100){
+    if (this.progressBar >= 100) {
       this.router.navigate(['/result-page']);
     }
 
     if (currentArray.length > 0 && currentArray.length >= recordsToPush) {
       this.startind = this.startind + recordsToPush
-    this.progressBar = this.progressBar + 10
-  
+      this.progressBar = this.progressBar + 10
+
     }
     let startIndex = this.startind;
     let endIndex = startIndex + recordsToPush;
@@ -120,7 +120,7 @@ export class HomePageComponent implements OnInit {
     // currentArray.push(...newArray);
     currentArray.splice(0, startIndex, ...newArray);
     return currentArray;
-    
+
   }
 
   change(ID: any, QID: any) {
@@ -167,7 +167,10 @@ export class HomePageComponent implements OnInit {
   }
   async getQuestionsbyUserID() {
     try {
-      const res = await this.userService.getQuestionsByUserID(this.userID).toPromise();
+      let _payload = {
+        user_id: this.userID
+      }
+      const res = await this.userService.getQuestionsByUserID(_payload).toPromise();
       console.log('result', res);
       let response: any = res;
 
@@ -223,8 +226,11 @@ export class HomePageComponent implements OnInit {
     }
   }
   submit() {
-    this.userService.getQuestionsByUserID(this.userID).subscribe(res=>{
-      let response :any = res
+    let _payload = {
+      user_id: this.userID
+    }
+    this.userService.getQuestionsByUserID(_payload).subscribe(res => {
+      let response: any = res
 
       if (response.success && response.user_responses.length == 70) {
         this.router.navigate(['/result-page'])
@@ -235,10 +241,10 @@ export class HomePageComponent implements OnInit {
         } else {
           this.pushNextRecords(this.showQuestions, this.allQuestions.length)
         }
-  
+
         // window.scrollTo(0, 0)
       }
-  
+
     })
     // this.getQuestionsbyUserID()
 
