@@ -147,34 +147,34 @@ export class ResultPageComponent implements OnInit {
     
     if (this.result1) {
       this.result1 = false
-      this.result2 = true
-      return;
-    }
-    if (this.result2) {
-      this.result2 = false
-      this.result3 = true
-      return;
-    }
-    if (this.result3) {
-      this.result3 = false
-      this.result4 = true
-      return;
-    }
-    if (this.result4) {
-      this.result4 = false
-      this.result5 = true
-      return;
-    }
-    if (this.result5) {
-      this.result5 = false
-      this.result6 = true
-      return;
-    }
-    if (this.result6) {
-      this.result6 = false
       this.result7 = true
       return;
     }
+    // if (this.result2) {
+    //   this.result2 = false
+    //   this.result3 = true
+    //   return;
+    // }
+    // if (this.result3) {
+    //   this.result3 = false
+    //   this.result4 = true
+    //   return;
+    // }
+    // if (this.result4) {
+    //   this.result4 = false
+    //   this.result5 = true
+    //   return;
+    // }
+    // if (this.result5) {
+    //   this.result5 = false
+    //   this.result6 = true
+    //   return;
+    // }
+    // if (this.result1) {
+    //   this.result6 = false
+    //   this.result7 = true
+    //   return;
+    // }
     // if(this.result7){
     //   this.router.navigate(['/types-detail'])
     // }
@@ -185,34 +185,34 @@ export class ResultPageComponent implements OnInit {
   backTab() {
     if (this.result7) {
       this.result7 = false
-      this.result6 = true
-      return;
-    }
-    if (this.result6) {
-      this.result6 = false
-      this.result5 = true
-      return;
-    }
-    if (this.result5) {
-      this.result5 = false
-      this.result4 = true
-      return;
-    }
-    if (this.result4) {
-      this.result4 = false
-      this.result3 = true
-      return;
-    }
-    if (this.result3) {
-      this.result3 = false
-      this.result2 = true
-      return;
-    }
-    if (this.result2) {
-      this.result2 = false
       this.result1 = true
       return;
     }
+    // if (this.result6) {
+    //   this.result6 = false
+    //   this.result5 = true
+    //   return;
+    // }
+    // if (this.result5) {
+    //   this.result5 = false
+    //   this.result4 = true
+    //   return;
+    // }
+    // if (this.result4) {
+    //   this.result4 = false
+    //   this.result3 = true
+    //   return;
+    // }
+    // if (this.result3) {
+    //   this.result3 = false
+    //   this.result2 = true
+    //   return;
+    // }
+    // if (this.result2) {
+    //   this.result2 = false
+    //   this.result1 = true
+    //   return;
+    // }
   }
 
   onTabClick(tab: any) {
