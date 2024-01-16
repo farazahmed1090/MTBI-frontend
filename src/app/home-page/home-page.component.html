@@ -41,7 +41,7 @@
                 [attr.aria-valuenow]="progressBar" aria-valuemin="0" aria-valuemax="100">
                 {{ progressBar }}%
             </div>
-        </div>{{progressBar}}
+        </div>
         <div *ngFor="let que of showQuestions ;let i = index" class=" question_div  mt-4" #questionDiv
             [ngClass]="{'disabled_div': i !== currentQuestionIndex}">
             <h3>{{que.question_text}}</h3>
