@@ -32,7 +32,7 @@ export class HomePageComponent implements OnInit {
 
   @ViewChildren('questionDiv') questionDivs!: QueryList<ElementRef>;
   // progressBar = "10%";
-  progressBar: number = 10;
+  progressBar: number = 0;
   startind = 0;
   userID: any = null;
   currentQuestionIndex: number = 0;
@@ -101,7 +101,7 @@ export class HomePageComponent implements OnInit {
     this.currentQuestionIndex = 0
     this.scrollToEnabledQuestion()
 
-    if (this.progressBar >= 100) {
+    if (this.progressBar >= 90) {
       this.router.navigate(['/result-page']);
     }
 
@@ -194,31 +194,31 @@ export class HomePageComponent implements OnInit {
           }
 
           if (filteredQuestions.length > 7) {
-            this.progressBar = 90;
-          }
-          if (filteredQuestions.length > 14) {
             this.progressBar = 80;
           }
-          if (filteredQuestions.length > 21) {
+          if (filteredQuestions.length > 14) {
             this.progressBar = 70;
           }
-          if (filteredQuestions.length > 28) {
+          if (filteredQuestions.length > 21) {
             this.progressBar = 60;
           }
-          if (filteredQuestions.length > 35) {
+          if (filteredQuestions.length > 28) {
             this.progressBar = 50;
           }
-          if (filteredQuestions.length > 42) {
+          if (filteredQuestions.length > 35) {
             this.progressBar = 40;
           }
-          if (filteredQuestions.length > 49) {
+          if (filteredQuestions.length > 42) {
             this.progressBar = 30;
           }
-          if (filteredQuestions.length > 56) {
+          if (filteredQuestions.length > 49) {
             this.progressBar = 20;
           }
-          if (filteredQuestions.length > 63) {
+          if (filteredQuestions.length > 56) {
             this.progressBar = 10;
+          }
+          if (filteredQuestions.length > 63) {
+            this.progressBar = 0;
           }
         } 
       }
