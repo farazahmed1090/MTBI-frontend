@@ -7,7 +7,7 @@
             <img src="../../assets/images/result-templete.png" alt="" class="mt-4" height="200px">
             <span style="text-align: center;width: 70%; ">{{ perDes !== '' ? perDes : "Defenders are very dedicated and warm protectors, always ready to defend their loved ones" }}</span>
             </div>
-            <!-- <h3 *ngIf="result2" class="col-12 text-center py-2">Energy</h3>
+            <h3 *ngIf="result2" class="col-12 text-center py-2">Energy</h3>
         <div *ngIf="result2" class="col-12">
             <div class="row m-0 p-0">
                 <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
@@ -106,7 +106,7 @@
                     <span style="text-align: center;">Turbulent individuals are self-conscious and sensitive to stress. They feel a sense of urgency in their emotions and tend to be success-driven, perfectionistic, and eager to improve.</span>
                 </div>
             </div>
-        </div> -->
+        </div>
         
             <h3 *ngIf="result7" class="col-12 text-center">One more thing...</h3>
         <div *ngIf="result7" class="col-12 col-md-6">
@@ -138,11 +138,11 @@
         </div>
         <div class="dots-div">
             <div class="dots" [ngClass]="{ 'active-dot': result1 }" (click)="onTabClick('result1')"></div>
-            <!-- <div class="dots" [ngClass]="{ 'active-dot': result2 }"(click)="onTabClick('result2')"></div> -->
-            <!-- <div class="dots" [ngClass]="{ 'active-dot': result3 }" (click)="onTabClick('result3')"></div> -->
-            <!-- <div class="dots" [ngClass]="{ 'active-dot': result4 }" (click)="onTabClick('result4')"></div> -->
-            <!-- <div class="dots" [ngClass]="{ 'active-dot': result5 }" (click)="onTabClick('result5')"></div> -->
-            <!-- <div class="dots" [ngClass]="{ 'active-dot': result6 }" (click)="onTabClick('result6')"></div> -->
+            <div class="dots" [ngClass]="{ 'active-dot': result2 }"(click)="onTabClick('result2')"></div>
+            <div class="dots" [ngClass]="{ 'active-dot': result3 }" (click)="onTabClick('result3')"></div>
+            <div class="dots" [ngClass]="{ 'active-dot': result4 }" (click)="onTabClick('result4')"></div>
+            <div class="dots" [ngClass]="{ 'active-dot': result5 }" (click)="onTabClick('result5')"></div>
+            <div class="dots" [ngClass]="{ 'active-dot': result6 }" (click)="onTabClick('result6')"></div>
             <div class="dots" [ngClass]="{ 'active-dot': result7 }" (click)="onTabClick('result7')"></div>
         </div>
 
